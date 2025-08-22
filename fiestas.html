@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fiestas electrónicas | EntraDanc3</title>
+<link rel="icon" href="/favicon.svg">
+<link rel="manifest" href="/manifest.webmanifest">
+<link rel="stylesheet" href="/assets/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="/scripts/config.js"></script>
+
+</head><body>
+
+<header class="header">
+  <div class="container nav">
+    <div class="brand"><img src="/assets/logo.svg" alt="EntraDanc3" height="28" style="display:block"></div>
+    <div class="spacer"></div>
+    <nav class="menu">
+      <a href="/index.html">Inicio</a>
+      <a href="/fiestas.html">Fiestas</a>
+      <a href="/recitales.html">Recitales</a>
+      <a href="/futbol.html">Fútbol</a>
+      <a href="/como-funciona.html">Cómo funciona</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+
+<section class="container">
+  <h1>Fiestas electrónicas</h1>
+  <p class="sub">Entradas verificadas. Compra segura con EntraDanc3.</p>
+  <div id="grid" class="grid grid-3"></div>
+</section>
+<script type="module">
+  import { listByCategory } from '/scripts/app.js';
+  const grid = document.getElementById('grid');
+  const cat = 'fiestas';
+  (async () => {
+    const list = await listByCategory(cat);
+    if (list.length === 0) {
+      grid.innerHTML = '<div class="alert">No hay eventos cargados en esta categoría todavía.</div>';
+      return;
+    }
+    for (const e of list) {
+      const el = document.createElement('article');
+      el.className='card';
+      el.innerHTML = `
+        <img src='${e.thumb || ''}' alt='${e.title}'>
+        <div class='body'>
+          <h3>${e.title}</h3>
+          <p class='sub'>${new Date(e.date.seconds ? e.date.seconds*1000 : e.date).toLocaleDateString('es-AR')} · ${e.venue}</p>
+          <a class='btn' href='/${e.slug || e.id}.html'>Comprar</a>
+        </div>`;
+      grid.appendChild(el);
+    }
+  })();
+</script>
+
+
+<footer class="footer">
+  <div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div>© 2025 EntraDanc3 — Broker de entradas de confianza</div>
+    <div><a href="/terminos.html">Términos</a> · <a href="/reembolsos.html">Reembolsos</a> · <a href="/privacidad.html">Privacidad</a> · <a href="/admin/login.html">Admin</a></div>
+  </div>
+</footer>
+
+<script type="module" src="/scripts/app.js"></script>
+</body></html>
