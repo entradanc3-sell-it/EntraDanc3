@@ -8,7 +8,6 @@ window.FB_CONFIG = {
   messagingSenderId: "195691666679",
   appId: "1:195691666679:web:968632bb77705e861ec7f2",
   measurementId: "G-777HCN2FPH"
+  window.ADMIN_UID = Ov2vTmzXY4ZNcMxqOVOccDp3Hfp2;
 };
-
-// window.ADMIN_UID = Ov2vTmzXY4ZNcMxqOVOccDp3Hfp2;
 // END
