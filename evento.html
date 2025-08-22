@@ -1,0 +1,81 @@
+
+<!DOCTYPE html><html lang="es"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Evento | EntraDanc3</title>
+<link rel="icon" href="/favicon.svg"><link rel="stylesheet" href="/assets/styles.css">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+<script src="/scripts/config.js"></script>
+<script type="module">
+  import { getEvent } from '/scripts/app.js';
+  const params = new URLSearchParams(location.search);
+  const slug = params.get('id');
+  const head = document.querySelector('title');
+  const wrap = document.getElementById('wrap');
+  (async () => {
+    const e = await getEvent(slug);
+    if(!e){ wrap.innerHTML='<div class="container"><div class="alert err">Evento no encontrado.</div></div>'; return; }
+    head.textContent = e.title + ' | EntraDanc3';
+    const dateStr = new Date(e.date.seconds ? e.date.seconds*1000 : e.date).toLocaleDateString('es-AR');
+    const sectors = e.sectors || [];
+    document.getElementById('img').src = e.thumb || '';
+    document.getElementById('title').textContent = e.title;
+    document.getElementById('meta').textContent = `${dateStr} · ${e.venue}, ${e.city}`;
+    document.getElementById('desc').textContent = e.desc || '';
+    const sel = document.getElementById('sector');
+    sel.innerHTML = sectors.map((s,i)=>`<option value="${i}">${s.name}</option>`).join('') || '<option>Única</option>';
+    const price = document.getElementById('price');
+    const buy = document.getElementById('buy');
+    function update(){
+      if(sectors.length===0){ price.textContent='Consultar'; buy.href='https://wa.me/5491112345678'; return; }
+      const s = sectors[sel.value||0];
+      price.textContent = 'ARS ' + (s.price||0).toLocaleString('es-AR');
+      buy.href = s.mp_link || 'https://wa.me/5491112345678';
+    }
+    sel.addEventListener('change', update); update();
+  })();
+</script>
+</head><body>
+
+<header class="header">
+  <div class="container nav">
+    <div class="brand"><img src="/assets/logo.svg" alt="EntraDanc3" height="28" style="display:block"></div>
+    <div class="spacer"></div>
+    <nav class="menu">
+      <a href="/index.html">Inicio</a>
+      <a href="/fiestas.html">Fiestas</a>
+      <a href="/recitales.html">Recitales</a>
+      <a href="/futbol.html">Fútbol</a>
+      <a href="/como-funciona.html">Cómo funciona</a>
+      <a href="/contacto.html">Contacto</a>
+    </nav>
+  </div>
+</header>
+
+<section class="container" id="wrap">
+  <div class="grid" style="grid-template-columns:1.1fr .9fr;gap:20px">
+    <div class="card"><img id="img" src="" alt="Evento"></div>
+    <div class="card" style="padding:18px">
+      <h1 id="title" style="margin:0 0 8px">Evento</h1>
+      <p id="meta" class="sub">Fecha · Lugar</p>
+      <div class="price" id="price">ARS 0</div>
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:10px 0">
+        <label for="sector">Sector</label>
+        <select id="sector"></select>
+        <a id="buy" class="btn" href="#" target="_blank" rel="noopener">Comprar ahora</a>
+        <a class="btn-ghost" href="https://wa.me/5491112345678" target="_blank">WhatsApp</a>
+      </div>
+      <p id="desc" class="sub">Descripción.</p>
+      <hr style="border-color:#2a2a2a">
+      <small class="sub">Entrega digital verificada post pago. Ante reprogramación/cancelación, te asistimos según política del evento.</small>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container" style="display:flex;justify-content:space-between;flex-wrap:wrap;gap:10px">
+    <div>© 2025 EntraDanc3 — Broker de entradas de confianza</div>
+    <div><a href="/terminos.html">Términos</a> · <a href="/reembolsos.html">Reembolsos</a> · <a href="/privacidad.html">Privacidad</a> · <a href="/admin/login.html">Admin</a></div>
+  </div>
+</footer>
+
+</body></html>
