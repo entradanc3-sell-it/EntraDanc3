@@ -1,6 +1,0 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="320" height="64" viewBox="0 0 320 64">
-  <rect width="320" height="64" rx="12" fill="#0b0b0b"/>
-  <circle cx="36" cy="32" r="10" fill="#a20505"/>
-  <circle cx="36" cy="32" r="18" fill="none" stroke="#a20505" stroke-opacity=".25"/>
-  <text x="60" y="40" font-family="Poppins, Arial, sans-serif" font-weight="700" font-size="28" fill="#f5f5f5">EntraDanc3</text>
-</svg>
