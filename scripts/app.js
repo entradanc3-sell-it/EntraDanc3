@@ -13,12 +13,12 @@ const db = getFirestore(app);
 
 // Helpers
 export async function listByCategory(cat){
-  const q = query(collection(db,'events'), where('category','==',cat), orderBy('date','asc'));
+  const q = query(collection(db,'eventos'), where('category','==',cat), orderBy('date','asc'));
   const snap = await getDocs(q);
   return snap.docs.map(d => ({id:d.id, ...d.data()}));
 }
 export async function getEvent(slug){
-  const ref = doc(db,'events', slug);
+  const ref = doc(db,'eventos', slug);
   const s = await getDoc(ref);
   if(!s.exists()) return null;
   return {id:s.id, ...s.data()};
